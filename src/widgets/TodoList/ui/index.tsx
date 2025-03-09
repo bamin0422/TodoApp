@@ -1,19 +1,30 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Empty from '../../Empty/ui';
-import useTodoList from '../models/useTodoList';
+import TodoItem from '../TodoItem';
+import {TodoItemInfo} from '../../../entities';
 
-const TodoList = () => {
-  const {mockedTodoList} = useTodoList();
+interface Props {
+  todoList: TodoItemInfo[];
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
+}
+
+const TodoList = ({todoList, onToggle, onDelete}: Props) => {
   return (
     <>
-      {mockedTodoList.length > 0 ? (
+      {todoList?.length > 0 ? (
         <FlatList
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           style={styles.list}
-          data={mockedTodoList}
+          data={todoList}
           renderItem={({item}) => (
-            <View>
-              <Text>{item.text}</Text>
-            </View>
+            <TodoItem
+              id={item.id}
+              text={item.text}
+              done={item.done}
+              onToggle={onToggle}
+              onDelete={onDelete}
+            />
           )}
           keyExtractor={item => item.id.toString()}
         />
@@ -27,6 +38,10 @@ const TodoList = () => {
 const styles = StyleSheet.create({
   list: {
     flex: 1,
+  },
+  separator: {
+    backgroundColor: '#e0e0e0',
+    height: 1,
   },
 });
 

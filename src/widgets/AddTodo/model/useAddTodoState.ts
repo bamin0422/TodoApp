@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Keyboard} from 'react-native';
 
 const useAddTodoState = () => {
-  const [text, setText] = useState<string>();
+  const [text, setText] = useState<string>('');
 
   const onPress = () => {
     setText('');

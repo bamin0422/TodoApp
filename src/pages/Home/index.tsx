@@ -3,16 +3,19 @@ import DateHead from '../../widgets/DateHead/ui';
 import TodoList from '../../widgets/TodoList/ui';
 import AddTodo from '../../widgets/AddTodo/ui';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import useHome from './models';
 
 const Home = () => {
+  const {todoList, onInsert, onToggle, onDelete} = useHome();
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.block}>
       <KeyboardAvoidingView
         behavior={Platform.select({ios: 'padding', android: 'height'})}
         style={styles.avoid}>
         <DateHead />
-        <TodoList />
-        <AddTodo />
+        <TodoList todoList={todoList} onToggle={onToggle} onDelete={onDelete} />
+        <AddTodo onInsert={onInsert} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

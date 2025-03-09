@@ -10,7 +10,11 @@ import {
 import AddWhiteIcon from '../../../../assets/icons/add_white/add_white.png';
 import useAddTodoState from '../model/useAddTodoState';
 
-const AddTodo = () => {
+interface Props {
+  onInsert: (text: string) => void;
+}
+
+const AddTodo = ({onInsert}: Props) => {
   const {text, setText, onPress} = useAddTodoState();
 
   return (
@@ -31,7 +35,7 @@ const AddTodo = () => {
         </TouchableOpacity>
       ) : (
         <View style={styles.circleWrapper}>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={() => onInsert(text)}>
             <View style={styles.buttonStyle}>
               <Image source={AddWhiteIcon} />
             </View>
