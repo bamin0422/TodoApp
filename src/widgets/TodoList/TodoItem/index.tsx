@@ -1,23 +1,49 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CheckWhiteIcon from '../../../../assets/icons/check_white/check_white.png';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface Props {
   id: number;
   text: string;
   done?: boolean;
   onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const TodoItem = ({id, text, done, onToggle}: Props) => {
+const TodoItem = ({id, text, done, onToggle, onDelete}: Props) => {
+  const onDeleteButtonPressed = (id: number) => {
+    Alert.alert(
+      '삭제',
+      '정말로 삭제하시겠습니까?',
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {text: '삭제', onPress: () => onDelete(id), style: 'destructive'},
+      ],
+      {cancelable: true, onDismiss: () => {}},
+    );
+  };
+
   return (
-    <TouchableOpacity onPress={() => onToggle(id)}>
-      <View style={styles.item}>
+    <View style={styles.item}>
+      <TouchableOpacity onPress={() => onToggle(id)}>
         <View style={[styles.circle, done && styles.filled]}>
           {done && <Image source={CheckWhiteIcon} />}
         </View>
-        <Text style={[styles.text, done && styles.lineTrough]}>{text}</Text>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <Text style={[styles.text, done && styles.lineTrough]}>{text}</Text>
+      {done && (
+        <TouchableOpacity onPress={() => onDeleteButtonPressed(id)}>
+          <Icon name="delete" size={24} color="red" />
+        </TouchableOpacity>
+      )}
+    </View>
   );
 };
 

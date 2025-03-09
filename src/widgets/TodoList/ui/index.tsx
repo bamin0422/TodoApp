@@ -6,9 +6,10 @@ import {TodoItemInfo} from '../../../entities';
 interface Props {
   todoList: TodoItemInfo[];
   onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const TodoList = ({todoList, onToggle}: Props) => {
+const TodoList = ({todoList, onToggle, onDelete}: Props) => {
   return (
     <>
       {todoList?.length > 0 ? (
@@ -22,6 +23,7 @@ const TodoList = ({todoList, onToggle}: Props) => {
               text={item.text}
               done={item.done}
               onToggle={onToggle}
+              onDelete={onDelete}
             />
           )}
           keyExtractor={item => item.id.toString()}

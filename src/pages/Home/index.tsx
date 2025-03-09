@@ -6,7 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import useHome from './models';
 
 const Home = () => {
-  const {todoList, onInsert, onToggle} = useHome();
+  const {todoList, onInsert, onToggle, onDelete} = useHome();
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.block}>
@@ -14,7 +14,7 @@ const Home = () => {
         behavior={Platform.select({ios: 'padding', android: 'height'})}
         style={styles.avoid}>
         <DateHead />
-        <TodoList todoList={todoList} onToggle={onToggle} />
+        <TodoList todoList={todoList} onToggle={onToggle} onDelete={onDelete} />
         <AddTodo onInsert={onInsert} />
       </KeyboardAvoidingView>
     </SafeAreaView>

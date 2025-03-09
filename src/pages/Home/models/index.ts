@@ -34,7 +34,13 @@ const useHome = () => {
     });
   };
 
-  return {todoList, setTodoList, onInsert, onToggle};
+  const onDelete = (id: number) => {
+    setTodoList(prev => {
+      return prev.filter(todoItemInfo => todoItemInfo.id !== id);
+    });
+  };
+
+  return {todoList, setTodoList, onInsert, onToggle, onDelete};
 };
 
 export default useHome;
