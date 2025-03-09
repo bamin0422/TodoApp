@@ -1,10 +1,13 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {TodoItemInfo} from '../../../entities';
 import getMockedTodoItemInfoList from '../api/getMockedTodoItemInfoList';
+import useAsyncStorage from '../../../shared/lib/AsyncStorage';
 
 const useHome = () => {
+  const {save, load} = useAsyncStorage();
+  const [isFirst, setIsFirst] = useState<boolean>(true);
   const [todoList, setTodoList] = useState<TodoItemInfo[]>(
-    getMockedTodoItemInfoList(),
+    !isFirst ? [] : getMockedTodoItemInfoList(),
   );
 
   const onInsert = (text: string) => {
@@ -39,6 +42,19 @@ const useHome = () => {
       return prev.filter(todoItemInfo => todoItemInfo.id !== id);
     });
   };
+
+  useEffect(() => {
+    if (!isFirst) save('todos', todoList);
+  }, [todoList]);
+
+  useEffect(() => {
+    load<TodoItemInfo[]>('todos').then((result: TodoItemInfo[] | null) => {
+      const todos = result as TodoItemInfo[] | null;
+      setTodoList(todos ? todos : getMockedTodoItemInfoList());
+    });
+
+    setIsFirst(false);
+  }, []);
 
   return {todoList, setTodoList, onInsert, onToggle, onDelete};
 };
