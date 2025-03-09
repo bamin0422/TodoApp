@@ -1,7 +1,7 @@
 import React from 'react';
-import DateHead from './components/DateHead/ui';
+import DateHead from './src/components/DateHead/ui';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import Empty from './components/Empty/ui';
+import Empty from './src/components/Empty/ui';
 import {StyleSheet} from 'react-native';
 
 const App = (): React.JSX.Element => {
@@ -18,6 +18,7 @@ const App = (): React.JSX.Element => {
 const styles = StyleSheet.create({
   block: {
     flex: 1,
+    backgroundColor: 'white',
   },
 });
 
