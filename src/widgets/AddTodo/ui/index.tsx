@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import AddWhiteIcon from '../../../../assets/icons/add_white/add_white.png';
-import useAddTodoState from '../models/useAddTodoState';
+import useAddTodoState from '../model/useAddTodoState';
 
 const AddTodo = () => {
   const {text, setText, onPress} = useAddTodoState();
